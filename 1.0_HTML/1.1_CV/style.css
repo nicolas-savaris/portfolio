@@ -1,0 +1,60 @@
+body {
+    margin: 0px;
+    background-color: #F8FAFC;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+section {
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 10px 0;
+}
+
+ul {
+    padding-left: 25px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.profilo{
+    background-color: #458393;
+    padding: 30px;
+    color: aliceblue;
+    text-align: center;
+    border-radius: 10px;
+}
+.container{
+    width:80%;
+    max-width:1000px;
+    margin:auto;
+}
+
+.project {
+    margin-left: 20px;
+}
+.experience-date{
+    font-style: italic;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+.formazione p {
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.experience-list li {
+    margin-bottom: 10px;
+}
