@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather App</title>
+
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+
+    <main class="weather-app">
+
+        <header class="app-header">
+            <h1>Weather</h1>
+            <p>Check the weather anywhere.</p>
+        </header>
+
+        <section class="search-section">
+            <form id="search-form">
+                <input type="text" id="city-input" placeholder="Search for a city..." autocomplete="off">
+                <button type="submit">Search</button>
+            </form>
+        </section>
+
+        <section class="weather-dashboard">
+
+            <div class="current-weather">
+                <p class="location">📍 Rome, Italy</p>
+
+                <div class="temperature">
+                    <span>24</span>°C
+                </div>
+
+                <p class="condition">Clear sky</p>
+            </div>
+
+            <div class="weather-details">
+
+                <div class="weather-detail">
+                    <span>💧</span>
+                    <p>Humidity</p>
+                    <strong>55%</strong>
+                </div>
+
+                <div class="weather-detail">
+                    <span>💨</span>
+                    <p>Wind</p>
+                    <strong>12 km/h</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+        <p id="error-message" class="error-message"></p>
+
+    </main>
+
+    <script src="JS/script.js"></script>
+
+</body>
+
+</html>
