@@ -125,3 +125,26 @@ header h1 {
     margin-top: 1rem;
     color: #F87171;
 }
+@media (max-width: 768px) {
+
+    .weather-app {
+        width: 90%;
+        padding: 2rem 0;
+    }
+
+    .weather-dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .weather-main {
+        gap: 1.5rem;
+    }
+
+    .temperature {
+        font-size: 3.5rem;
+    }
+
+    .weather-icon {
+        font-size: 4rem;
+    }
+}
