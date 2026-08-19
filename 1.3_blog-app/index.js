@@ -14,10 +14,12 @@ app.get('/', (req,res) => {
 });
 
 app.post('/post', (req, res) => {
-    // qui recupereremo i dati del form
-    console.log(req.body['post-title']);
-    console.log(req.body['post-content']);
-    
+    posts.push({
+        title: req.body['post-title'],
+        content: req.body['post-content']
+    });
+
+    res.redirect('/')
 });
 
 // Start the server
