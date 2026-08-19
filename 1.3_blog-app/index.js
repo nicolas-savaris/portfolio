@@ -8,6 +8,7 @@ app.set('view engine', 'ejs');
 // Middleware to parse JSON requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 app.get('/', (req,res) => {
     res.render('index', { posts });
