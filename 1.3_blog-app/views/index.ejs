@@ -1,0 +1,14 @@
+<h1>Welcome to the Blog App</h1>
+
+<% posts.forEach(post=> { %>
+
+    <!-- HTML del post -->
+
+    <h2>
+        <%= post.title %>
+    </h2>
+    <p>
+        <%= post.content %>
+    </p>
+
+    <% }); %>
