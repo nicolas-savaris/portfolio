@@ -14,3 +14,36 @@ h1 {
     font-weight: 700;
     margin-bottom: 30px;
 }
+
+article{
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+}
+
+article h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+article p {
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.new-post {
+    margin-top: 50px;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.new-post input,
+.new-post textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-family: inherit;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
