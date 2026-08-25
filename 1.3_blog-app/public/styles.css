@@ -1,4 +1,16 @@
+:root {
+    --navy: #0A192F;
+    --light-navy: #112240;
+    --lightest-navy: #233554;
+    --slate: #8892B0;
+    --light-slate: #CCD6F6;
+    --white: #E6F1FF;
+    --green: #64FFDA;
+}
+
 body {
+    background-color: var(--navy);
+    color: var(--white);
     font-family: Arial, sans-serif;
     line-height: 1.6;
 }
@@ -34,16 +46,42 @@ article p {
 .new-post {
     margin-top: 50px;
     padding: 30px;
-    border: 1px solid #ddd;
     border-radius: 8px;
+    transition: 0.5s ease;
 }
 
 .new-post input,
 .new-post textarea {
+    background-color: var(--lightest-navy);
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
-    font-family: inherit;
     font-size: 1rem;
     box-sizing: border-box;
+}
+.new-post input {
+    height: 45px;
+}
+.new-post textarea {
+    min-height: 150px;
+}
+.new-post input:focus,
+.new-post textarea:focus {
+    border: 1px solid var(--lightest-navy);
+    border-radius: 4px;
+}
+.new-post button {
+    background-color: var(--lightest-navy);
+    color: var(--green);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+.new-post button:hover {
+    background-color: var(--light-navy);
+    color: var(--green);
+
 }
