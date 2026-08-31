@@ -14,6 +14,13 @@ app.get('/', (req,res) => {
     res.render('index', { posts });
 });
 
+app.get("/post/:id", (req, res) => {
+    const id = req.params.id;
+    const post = posts[id];
+
+    res.render("post", { post });
+});
+
 app.post('/post', (req, res) => {
     posts.push({
         title: req.body['post-title'],
@@ -22,6 +29,8 @@ app.post('/post', (req, res) => {
 
     res.redirect('/')
 });
+
+
 
 // Start the server
 app.listen(PORT, () => {
