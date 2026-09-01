@@ -12,19 +12,33 @@
 <main>
     <h1>Welcome to the Blog App</h1>
 
-    <% posts.forEach(post=> { %>
-
-        <!-- HTML del post -->
+    <!-- HTML del post -->
+    <% posts.forEach((post, index)=> { %>
         <article>
             <h2>
-                <%= post.title %>
+                <a href="/post/<%= index %>">
+                    <%= post.title %>
+                </a>
             </h2>
             <p>
-                <%= post.content %>
+                <% if (post.content.length> 100) { %>
+                    <p>
+                        <%= post.content.slice(0, 100) %>...
+                    </p>
+                    <a href="/post/<%= index %>">Read more →</a>
+                    <% } else { %>
+                        <p>
+                            <%= post.content %>
+                        </p>
+                        <% } %>
             </p>
+            <p>
+                <%= post.date %>
+            </p>
+
+
+
         </article>
-
-
         <% }); %>
 
             <section class="new-post">
