@@ -16,7 +16,7 @@
     <% posts.forEach((post, index)=> { %>
         <article>
             <h2>
-                <a href="/post/<%= index %>">
+                <a href="/post/<%= post.slug %>">
                     <%= post.title %>
                 </a>
             </h2>
@@ -25,7 +25,7 @@
                     <p>
                         <%= post.content.slice(0, 100) %>...
                     </p>
-                    <a href="/post/<%= index %>">Read more →</a>
+                    <a href="/post/<%= post.slug %>">Read more →</a>
                     <% } else { %>
                         <p>
                             <%= post.content %>
