@@ -18,6 +18,11 @@ app.get("/post/:slug", (req, res) => {
     const slug = req.params.slug;
     const post = posts.find(post => post.slug === slug);
 
+    if (!post) {
+        res.status(404).render("404");
+        return;
+    }
+
     res.render("post", { post });
 });
 
