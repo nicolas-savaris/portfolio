@@ -1,0 +1,96 @@
+body{
+    background-color:  #0b1026;
+    font-family: "Inter", sans-serif;
+    color: whitesmoke;
+}
+
+.app{
+    display: grid;
+    grid-template-columns: 280px 1fr;
+}
+
+.sidebar{
+    background-color: #11162F;
+    padding: 30px;
+    min-height: 100vh;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom:30px;
+}
+.logo-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(135deg, #8B5CF6, #EC4899);
+
+    border-radius: 14px;
+
+    color: white;
+    font-size: 30px;
+}
+.logo-text h2 {
+    margin: 0;
+    line-height: 1.1;
+
+    font-size: 26px;
+    font-weight: 700;
+
+    background: linear-gradient(90deg, #8B5CF6, #EC4899);
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.logo-text p {
+    margin: 2px 0 0;
+    line-height: 1.2;
+}
+.card{
+    background-color: #171D3A;
+}
+.stats{
+    display: block;
+    margin-bottom: 40px;
+}
+.stats div{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #252B4A;
+    border-radius: 5px;
+    color: #252B4A;
+}
+nav a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 12px 15px;
+
+    color: #94A3B8;
+    text-decoration: none;
+
+    font-size: 16px;
+}
+
+nav a i {
+    font-size: 22px;
+}
+nav a.active {
+    background: linear-gradient(135deg, #8B5CF6, #EC4899);
+    color: white;
+
+    border-radius: 5px;
+}
+nav a:hover{
+    color: #F8FAFC;
+    background-color: #8B5CF6;
+    border-radius: 5px;
+}
