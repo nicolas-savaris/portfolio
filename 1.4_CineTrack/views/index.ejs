@@ -24,7 +24,13 @@
         </p>
         <p>⭐ <%= movie.rating %>/10</p>
 
-        <% }); %>
+        <% if (movie.watched) { %>
+            <p>Watched</p>
+            <% } else { %>
+                <p>Watching list</p>
+                <% } %>
+
+                    <% }); %>
 </body>
 
 </html>
