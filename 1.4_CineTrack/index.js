@@ -30,7 +30,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
-    res.render("index.ejs")
+    const result = await db.query("SELECT * FROM movies");
+    res.render("index.ejs",
+        {movies: result.rows}
+    )
 });
 
 app.listen(port, () => {
