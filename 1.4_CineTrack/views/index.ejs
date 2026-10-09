@@ -92,6 +92,23 @@
             </button>
 
         </div>
+
+        <section class="featured-movie">
+            <h2>Today's Pick</h2>
+
+            <h3>
+                <%= featuredMovie.title %>
+            </h3>
+
+            <img src="https://image.tmdb.org/t/p/w500<%= featuredMovie.poster_path %>" alt="<%= featuredMovie.title %>"
+                width="200">
+
+            <p>Release date: <%= featuredMovie.release_date %>
+            </p>
+
+            <p>TMDB Rating: ⭐ <%= featuredMovie.vote_average %>/10</p>
+        </section>
+
     </main>
 
 </div>
@@ -119,6 +136,7 @@
                 <% } %>
 
                     <% }); %>
+
 </body>
 
 </html>

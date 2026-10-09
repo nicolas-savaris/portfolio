@@ -34,7 +34,6 @@ body{
     grid-template-columns: 280px 1fr;
 }
 
-
 .sidebar{
     background-color: #11162F;
     padding: 30px;
@@ -150,7 +149,6 @@ nav a:hover{
 /* ========================================
    6. TOP BAR
    ======================================== */
-
 
 
 .top-bar {

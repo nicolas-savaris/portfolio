@@ -8,6 +8,23 @@ const port = 3000;
 
 dotenv.config();
 
+
+const response = await fetch(
+    "https://api.themoviedb.org/3/search/movie?query=The%20Dark%20Knight",
+    {
+        headers: {
+            Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,
+            accept: "application/json"
+        }
+    }
+);
+
+const data = await response.json();
+const featuredMovie = data.results[0];
+
+console.log(data.results[0].poster_path);
+
+
 const db = new pg.Client({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
@@ -29,12 +46,35 @@ db.query("SELECT * FROM movies", (err, result) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+
+
 app.get("/", async (req, res) => {
+    // 1. Get our personal movie collection from PostgreSQL
     const result = await db.query("SELECT * FROM movies");
-    res.render("index.ejs",
-        {movies: result.rows}
-    )
+
+    // 2. Fetch a movie from TMDB
+    const response = await fetch(
+        "https://api.themoviedb.org/3/search/movie?query=The%20Dark%20Knight",
+        {
+            headers: {
+                Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,
+                accept: "application/json"
+            }
+        }
+    );
+
+    const data = await response.json();
+    const featuredMovie = data.results[0];
+
+    console.log("Featured movie:", featuredMovie.title);
+    console.log("Poster path:", featuredMovie.poster_path);
+    // 3. Send both datasets to EJS
+    res.render("index.ejs", {
+        movies: result.rows,
+        featuredMovie: featuredMovie
+    });
 });
+
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
