@@ -52,6 +52,19 @@ app.get("/", async (req, res) => {
     // 1. Get our personal movie collection from PostgreSQL
     const result = await db.query("SELECT * FROM movies");
 
+    // Temporarily log the stats to the console
+    const statsResult = await db.query(`
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (WHERE watched = TRUE) AS watched,
+                COUNT(*) FILTER (WHERE watched = FALSE) AS watchlist
+            FROM movies
+        `);
+
+    console.log("MOVIE STATS:", statsResult.rows[0]);
+
+    
+
     // 2. Fetch a movie from TMDB
     const response = await fetch(
         "https://api.themoviedb.org/3/search/movie?query=The%20Dark%20Knight",
@@ -62,16 +75,19 @@ app.get("/", async (req, res) => {
             }
         }
     );
+    
 
     const data = await response.json();
     const featuredMovie = data.results[0];
 
+    
     console.log("Featured movie:", featuredMovie.title);
     console.log("Poster path:", featuredMovie.poster_path);
     // 3. Send both datasets to EJS
     res.render("index.ejs", {
         movies: result.rows,
-        featuredMovie: featuredMovie
+        featuredMovie: featuredMovie,
+        stats: statsResult.rows[0]
     });
 });
 

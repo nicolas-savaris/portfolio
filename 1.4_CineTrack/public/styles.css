@@ -230,3 +230,79 @@ nav a:hover{
 /* ========================================
    10. RESPONSIVE
    ======================================== */
+
+
+/* ===== TODAY'S PICK ===== */
+
+.featured-movie {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 24px;
+    padding: 28px;
+    background: linear-gradient(135deg, #171D3A, #21183F);
+    border: 1px solid #252B4A;
+    border-radius: 18px;
+}
+
+.featured-poster img {
+    display: block;
+    width: 190px;
+    height: auto;
+    border-radius: 12px;
+}
+
+.featured-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.eyebrow {
+    margin: 0 0 12px;
+    color: #C084FC;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.featured-details h2 {
+    margin: 0 0 12px;
+    color: var(--text-main);
+    font-size: 32px;
+}
+
+.featured-meta {
+    color: #CBD5E1;
+    font-size: 15px;
+}
+
+.featured-meta span {
+    margin: 0 10px;
+    color: #64748B;
+}
+
+.featured-overview {
+    max-width: 650px;
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 20px 0;
+}
+
+/* Responsive layout */
+@media (max-width: 700px) {
+    .featured-movie {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .featured-poster img {
+        width: 150px;
+    }
+
+    .featured-details h2 {
+        font-size: 26px;
+    }
+}

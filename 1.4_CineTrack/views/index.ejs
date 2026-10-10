@@ -30,17 +30,23 @@
         <div class="stats">
             <div>
                 <span>Total</span>
-                <strong>2</strong>
+                <span>
+                    <%= stats.total %>
+                </span>
             </div>
 
             <div>
                 <span>Watched</span>
-                <strong>1</strong>
+                <strong>
+                    <%= stats.watched %>
+                </strong>
             </div>
 
             <div>
                 <span>Watchlist</span>
-                <strong>1</strong>
+                <strong>
+                    <%= stats.watchlist %>
+                </strong>
             </div>
         </div>
 
@@ -93,21 +99,41 @@
 
         </div>
 
+
         <section class="featured-movie">
-            <h2>Today's Pick</h2>
 
-            <h3>
-                <%= featuredMovie.title %>
-            </h3>
+            <div class="featured-poster">
+                <img src="https://image.tmdb.org/t/p/w500<%= featuredMovie.poster_path %>"
+                    alt="<%= featuredMovie.title %>">
+            </div>
 
-            <img src="https://image.tmdb.org/t/p/w500<%= featuredMovie.poster_path %>" alt="<%= featuredMovie.title %>"
-                width="200">
+            <div class="featured-details">
 
-            <p>Release date: <%= featuredMovie.release_date %>
-            </p>
+                <p class="eyebrow">TODAY'S PICK</p>
 
-            <p>TMDB Rating: ⭐ <%= featuredMovie.vote_average %>/10</p>
+                <h2>
+                    <%= featuredMovie.title %>
+                </h2>
+
+                <p class="featured-meta">
+                    <%= featuredMovie.release_date.slice(0, 4) %>
+                        <span>•</span>
+                        ⭐ <%= featuredMovie.vote_average.toFixed(1) %>/10
+                </p>
+
+                <p class="featured-overview">
+                    <%= featuredMovie.overview %>
+                </p>
+
+                <button class="add-movie">
+                    <i class="bi bi-plus-lg"></i>
+                    Add to Watchlist
+                </button>
+
+            </div>
+
         </section>
+
 
     </main>
 
