@@ -56,9 +56,13 @@ app.get("/", async (req, res) => {
     const statsResult = await db.query(`
             SELECT
                 COUNT(*) AS total,
-                COUNT(*) FILTER (WHERE watched = TRUE) AS watched,
-                COUNT(*) FILTER (WHERE watched = FALSE) AS watchlist
-            FROM movies
+                COUNT(*) FILTER (
+                    WHERE user_movies.watched = TRUE
+                ) AS watched,
+                COUNT(*) FILTER (
+                    WHERE user_movies.watched = FALSE
+                ) AS watchlist
+            FROM user_movies;
         `);
 
     console.log("MOVIE STATS:", statsResult.rows[0]);
