@@ -8,22 +8,6 @@ const port = 3000;
 
 dotenv.config();
 
-const response = await fetch(
-    "https://api.themoviedb.org/3/search/movie?query=The%20Dark%20Knight",
-    {
-        headers: {
-            Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,
-            accept: "application/json"
-        }
-    }
-);
-
-const data = await response.json();
-const featuredMovie = data.results[0];
-
-console.log(data.results[0].poster_path);
-
-
 const db = new pg.Client({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
@@ -33,7 +17,8 @@ const db = new pg.Client({
 });
 
 db.connect();
-
+// Useful for debugging: inspect all movies in the database.
+/*
 db.query("SELECT * FROM movies", (err, result) => {
     if (err) {
         console.error(err);
@@ -41,13 +26,14 @@ db.query("SELECT * FROM movies", (err, result) => {
         console.log(result.rows);
     }
 });
-
+*/
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Set EJS as the view engine
 app.get("/", async (req, res) => {
-    // 1. Get our personal movie collection from PostgreSQL
+    try{
+        // 1. Get our personal movie collection from PostgreSQL
     const result = await db.query("SELECT * FROM movies");
 
     // Temporarily log the stats to the console
@@ -76,8 +62,13 @@ app.get("/", async (req, res) => {
         }
     );
 
+    if (!response.ok) {
+        throw new Error("Could not fetch the featured movie from TMDB.");
+    }
+
     const data = await response.json();
     const featuredMovie = data.results[0];
+
 
     console.log("Featured movie:", featuredMovie.title);
     console.log("Poster path:", featuredMovie.poster_path);
@@ -87,71 +78,111 @@ app.get("/", async (req, res) => {
         featuredMovie: featuredMovie,
         stats: statsResult.rows[0]
     });
+    }catch (err) {
+        console.error("Error loading homepage:", err);
+        res.status(500).send("Could not load CineTrack.");
+    }
+    
 });
 
 // Add a movie to the watchlist
 app.post("/watchlist/add", async (req, res) => {
     const tmdbId = Number(req.body.tmdb_id);
 
-    //Validate the TMDB ID
+    // 1. Validate the TMDB ID.
     if (!Number.isInteger(tmdbId) || tmdbId <= 0) {
         return res.status(400).send("Invalid TMDB movie ID.");
     }
 
+    let transactionStarted = false;
+
     try {
-        // 1. Find the movie in our database
+        // 2. Fetch the movie's official details from TMDB.
+        const response = await fetch(
+            `https://api.themoviedb.org/3/movie/${tmdbId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,
+                    accept: "application/json"
+                }
+            }
+        );
+
+        if (!response.ok) {
+            return res.status(400).send(
+                "Could not find this movie on TMDB."
+            );
+        }
+
+        const movie = await response.json();
+
+        // 3. Start the database transaction.
+        await db.query("BEGIN");
+        transactionStarted = true;
+
+        // 4. Check whether the movie already exists.
         const existingMovie = await db.query(
             "SELECT id FROM movies WHERE tmdb_id = $1",
             [tmdbId]
         );
-        console.log(existingMovie.rows);
 
         let movieId;
 
         if (existingMovie.rows.length === 0) {
-        // The movie isn't in our catalog yet.
-        const newMovie = await db.query(
-            `INSERT INTO movies
-                (tmdb_id, title, year, rating, poster_path)
-            VALUES ($1, $2, $3, $4, $5)
-            RETURNING id`,
-            [
-                tmdbId,
-                req.body.title,
-                Number(req.body.year),
-                Number(req.body.rating),
-                req.body.poster_path
-            ]
-        );
+            // 5. Insert the verified movie details.
+            const newMovie = await db.query(
+                `INSERT INTO movies
+                    (tmdb_id, title, year, rating, poster_path)
+                 VALUES ($1, $2, $3, $4, $5)
+                 RETURNING id`,
+                [
+                    tmdbId,
+                    movie.title,
+                    movie.release_date
+                        ? Number(movie.release_date.slice(0, 4))
+                        : null,
+                    movie.vote_average,
+                    movie.poster_path
+                ]
+            );
 
-        movieId = newMovie.rows[0].id;
-        console.log("New movie database ID:", movieId);
-
+            movieId = newMovie.rows[0].id;
         } else {
-        // We already have this movie.
-        console.log("Movie already exists!");
-        movieId = existingMovie.rows[0].id;
+            // Reuse the existing movie's database ID.
+            movieId = existingMovie.rows[0].id;
         }
-        console.log("Movie ID to track:", movieId);
-        // 2. Add a record to the user_movies table
-        const trackingResult = await db.query(
+
+        // 6. Add the movie to the personal collection.
+        await db.query(
             `INSERT INTO user_movies (movie_id, watched)
-            VALUES ($1, FALSE)
-            ON CONFLICT (movie_id) DO NOTHING
-            RETURNING id`,
+             VALUES ($1, FALSE)
+             ON CONFLICT (movie_id) DO NOTHING`,
             [movieId]
         );
 
-        console.log("Tracking record:", trackingResult.rows);
+        // 7. Commit the transaction.
+        await db.query("COMMIT");
+        transactionStarted = false;
 
+        // 8. Return to the homepage.
+        res.redirect("/");
 
-    // We'll add the insert logic next.
     } catch (err) {
         console.error("Error adding movie:", err);
+
+        // Roll back if the transaction is still active.
+        if (transactionStarted) {
+            try {
+                await db.query("ROLLBACK");
+            } catch (rollbackError) {
+                console.error("Rollback failed:", rollbackError);
+            }
+        }
+
         res.status(500).send("Could not add movie.");
     }
-    res.redirect("/");
 });
+
 
 
 app.listen(port, () => {

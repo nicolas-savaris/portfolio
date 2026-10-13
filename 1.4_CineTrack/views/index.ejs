@@ -135,13 +135,8 @@
                         <form action="/watchlist/add" method="POST">
                             <input type="hidden" name="tmdb_id" value="<%= featuredMovie.id %>">
 
-                            <input type="hidden" name="title" value="<%= featuredMovie.title %>">
 
-                            <input type="hidden" name="year" value="<%= featuredMovie.release_date.slice(0, 4) %>">
 
-                            <input type="hidden" name="rating" value="<%= featuredMovie.vote_average %>">
-
-                            <input type="hidden" name="poster_path" value="<%= featuredMovie.poster_path %>">
 
                             <button type="submit" class="add-movie">
                                 <i class="bi bi-plus-lg"></i>
