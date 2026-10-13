@@ -34,7 +34,18 @@ app.use(express.static("public"));
 app.get("/", async (req, res) => {
     try{
         // 1. Get our personal movie collection from PostgreSQL
-    const result = await db.query("SELECT * FROM movies");
+    const result = await db.query(`
+        SELECT
+            movies.title,
+            movies.year,
+            movies.rating,
+            user_movies.watched
+        FROM movies
+        JOIN user_movies
+            ON movies.id = user_movies.movie_id
+        WHERE user_movies.watched = FALSE
+        ORDER BY movies.rating DESC;
+    `);
 
     // Temporarily log the stats to the console
     const statsResult = await db.query(`

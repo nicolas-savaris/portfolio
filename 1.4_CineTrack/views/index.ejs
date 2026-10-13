@@ -11,171 +11,173 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineTrack</title>
 </head>
-<div class="app">
-
-
-    <aside class="sidebar">
-
-        <div class="logo">
-            <div class="logo-icon">
-                <i class="bi bi-film"></i>
-            </div>
-            <div class="logo-text">
-                <h2>CineTrack</h2>
-                <p>Movie Tracker</p>
-            </div>
-
-        </div>
-
-        <div class="stats">
-            <div>
-                <span>Total</span>
-                <span>
-                    <%= stats.total %>
-                </span>
-            </div>
-
-            <div>
-                <span>Watched</span>
-                <strong>
-                    <%= stats.watched %>
-                </strong>
-            </div>
-
-            <div>
-                <span>Watchlist</span>
-                <strong>
-                    <%= stats.watchlist %>
-                </strong>
-            </div>
-        </div>
-
-        <nav>
-
-            <a href="/" class="active">
-                <i class="bi bi-house"></i>
-                <span>Home</span>
-            </a>
-
-            <a href="#">
-                <i class="bi bi-clock"></i>
-                <span>Watchlist</span>
-            </a>
-
-            <a href="#">
-                <i class="bi bi-check-circle"></i>
-                <span>Watched</span>
-            </a>
-
-            <a href="#">
-                <i class="bi bi-list-task"></i>
-                <span>Lists</span>
-            </a>
-
-            <a href="#">
-                <i class="bi bi-gear"></i>
-                <span>Settings</span>
-            </a>
-
-        </nav>
-
-    </aside>
-
-
-    <main class="main-content">
-        <h1>Welcome to my CineTrack</h1>
-
-        <div class="top-bar">
-
-            <div class="search">
-                <i class="bi bi-search"></i>
-                <input type="text" placeholder="Search movies...">
-            </div>
-
-            <button class="add-movie">
-                <i class="bi bi-plus-lg"></i>
-                Add Movie
-            </button>
-
-        </div>
-
-
-        <section class="featured-movie">
-
-            <div class="featured-poster">
-                <img src="https://image.tmdb.org/t/p/w500<%= featuredMovie.poster_path %>"
-                    alt="<%= featuredMovie.title %>">
-            </div>
-
-            <div class="featured-details">
-
-                <p class="eyebrow">TODAY'S PICK</p>
-
-                <h2>
-                    <%= featuredMovie.title %>
-                </h2>
-
-                <p class="featured-meta">
-                    <%= featuredMovie.release_date.slice(0, 4) %>
-                        <span>•</span>
-                        ⭐ <%= featuredMovie.vote_average.toFixed(1) %>/10
-                </p>
-
-                <p class="featured-overview">
-                    <%= featuredMovie.overview %>
-                </p>
-                <%# Add to watchlist button : removed %>
-                    <%# <button class="add-movie">
-                        <i class="bi bi-plus-lg"></i>
-                        Add to Watchlist
-                        </button>
-                        %>
-
-
-                        <form action="/watchlist/add" method="POST">
-                            <input type="hidden" name="tmdb_id" value="<%= featuredMovie.id %>">
-
-
-
-
-                            <button type="submit" class="add-movie">
-                                <i class="bi bi-plus-lg"></i>
-                                Add to Watchlist
-                            </button>
-                        </form>
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-</div>
 
 <body>
-    <p>Track your favorite movies!</p>
+    <div class="app">
 
-    <% movies.forEach(movie=> { %>
 
-        <h2>
-            <%= movie.title %>
-        </h2>
-        <p>
-            <%= movie.year %>
-        </p>
-        <p>
-            <%= movie.genre %>
-        </p>
-        <p>⭐ <%= movie.rating %>/10</p>
+        <aside class="sidebar">
 
-        <% if (movie.watched) { %>
-            <p>Watched</p>
-            <% } else { %>
-                <p>Watching list</p>
-                <% } %>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="bi bi-film"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>CineTrack</h2>
+                    <p>Movie Tracker</p>
+                </div>
 
+            </div>
+
+            <div class="stats">
+                <div>
+                    <span>Total</span>
+                    <span>
+                        <%= stats.total %>
+                    </span>
+                </div>
+
+                <div>
+                    <span>Watched</span>
+                    <strong>
+                        <%= stats.watched %>
+                    </strong>
+                </div>
+
+                <div>
+                    <span>Watchlist</span>
+                    <strong>
+                        <%= stats.watchlist %>
+                    </strong>
+                </div>
+            </div>
+
+            <nav>
+
+                <a href="/" class="active">
+                    <i class="bi bi-house"></i>
+                    <span>Home</span>
+                </a>
+
+                <a href="#">
+                    <i class="bi bi-clock"></i>
+                    <span>Watchlist</span>
+                </a>
+
+                <a href="#">
+                    <i class="bi bi-check-circle"></i>
+                    <span>Watched</span>
+                </a>
+
+                <a href="#">
+                    <i class="bi bi-list-task"></i>
+                    <span>Lists</span>
+                </a>
+
+                <a href="#">
+                    <i class="bi bi-gear"></i>
+                    <span>Settings</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <main class="main-content">
+            <h1>Welcome to my CineTrack</h1>
+
+            <div class="top-bar">
+
+                <div class="search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search movies...">
+                </div>
+
+                <button class="add-movie">
+                    <i class="bi bi-plus-lg"></i>
+                    Add Movie
+                </button>
+
+            </div>
+            <section class="featured-movie">
+
+                <div class="featured-poster">
+                    <img src="https://image.tmdb.org/t/p/w500<%= featuredMovie.poster_path %>"
+                        alt="<%= featuredMovie.title %>">
+                </div>
+
+                <div class="featured-details">
+
+                    <p class="eyebrow">TODAY'S PICK</p>
+
+                    <h2>
+                        <%= featuredMovie.title %>
+                    </h2>
+
+                    <p class="featured-meta">
+                        <%= featuredMovie.release_date.slice(0, 4) %>
+                            <span>•</span>
+                            ⭐ <%= featuredMovie.vote_average.toFixed(1) %>/10
+                    </p>
+
+                    <p class="featured-overview">
+                        <%= featuredMovie.overview %>
+                    </p>
+                    <%# Add to watchlist button : removed %>
+                        <%# <button class="add-movie">
+                            <i class="bi bi-plus-lg"></i>
+                            Add to Watchlist
+                            </button>
+                            %>
+
+
+                            <form action="/watchlist/add" method="POST">
+                                <input type="hidden" name="tmdb_id" value="<%= featuredMovie.id %>">
+
+
+
+
+                                <button type="submit" class="add-movie">
+                                    <i class="bi bi-plus-lg"></i>
+                                    Add to Watchlist
+                                </button>
+                            </form>
+
+                </div>
+
+            </section>
+            <section class="movie-collection">
+                <p>Track your favorite movies!</p>
+
+                <% movies.forEach(movie=> { %>
+                    <article class="movie-card">
+                        <h2>
+                            <%= movie.title %>
+                        </h2>
+
+                        <p>
+                            <%= movie.year %>
+                        </p>
+
+                        <p>⭐ <%= movie.rating %>/10</p>
+
+                        <% if (movie.watched) { %>
+                            <p>Watched</p>
+                            <% } else { %>
+                                <p>Watchlist</p>
+                                <% } %>
+                    </article>
                     <% }); %>
+            </section>
+
+        </main>
+
+    </div>
+</body>
+
+
+<body>
 
 </body>
 
